@@ -82,6 +82,7 @@ export default function SignIn({ navigation }) {
                     value={email}
                     placeholder='Digite seu email'
                     icon={emailIcon}
+                    autoCapitalize="none"
                     onChangeText={(value) => setEmail(value)}
                 />
 

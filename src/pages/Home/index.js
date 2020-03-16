@@ -8,7 +8,7 @@ import HomeButton from '../../components/HomeButton'
 
 function Home ({navigation}) {
     return(
-        <View>
+        <View style={{flex: 1}}>
             <HeaderDefault headerText="HOME" navigation={navigation} />
 
             <HomeButton />

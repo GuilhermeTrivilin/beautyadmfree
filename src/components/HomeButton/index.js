@@ -2,12 +2,13 @@ import React from 'react'
 import { View, Text, Animated, TouchableWithoutFeedback } from 'react-native'
 
 import Icon from 'react-native-vector-icons/Feather'
-import RenderFabButton from '../../components/RenderFabButton'
+import RenderHomeButton from '../../components/RenderHomeButton'
+
+import ButtonAddAgendamento from '../../components/ButtonAddAgedamento'
 
 import styles from './style'
 
 export default class HomeButton extends React.Component {
-
     animation = new Animated.Value(0)
 
     toggleMenu = () => {
@@ -21,14 +22,16 @@ export default class HomeButton extends React.Component {
         this.open = !this.open
     }
 
+
+
     render() {
 
         const despesa = {
             transform: [
-                {scale: this.animation},
+                { scale: this.animation },
                 {
                     translateY: this.animation.interpolate({
-                        inputRange: [0,1],
+                        inputRange: [0, 1],
                         outputRange: [0, -150]
                     })
                 }
@@ -37,10 +40,10 @@ export default class HomeButton extends React.Component {
 
         const receita = {
             transform: [
-                {scale: this.animation},
+                { scale: this.animation },
                 {
                     translateY: this.animation.interpolate({
-                        inputRange: [0,1],
+                        inputRange: [0, 1],
                         outputRange: [0, -100]
                     })
                 }
@@ -49,10 +52,10 @@ export default class HomeButton extends React.Component {
 
         const agenda = {
             transform: [
-                {scale: this.animation},
+                { scale: this.animation },
                 {
                     translateY: this.animation.interpolate({
-                        inputRange: [0,1],
+                        inputRange: [0, 1],
                         outputRange: [0, -50]
                     })
                 }
@@ -73,29 +76,34 @@ export default class HomeButton extends React.Component {
         return (
             <View style={styles.container}>
 
-                <TouchableWithoutFeedback onPress={() => alert('oi')}>
-                    <Animated.View style={[styles.button, styles.subMenuDespesa, despesa]} >
-                        <Icon name={"dollar-sign"}  size={19} color="white" />
-                    </Animated.View> 
-                </TouchableWithoutFeedback>
+                <RenderHomeButton
+                    animation={despesa}
+                    onPress={() => alert('oi')}
+                    styles={[styles.button, styles.subMenuDespesa]}
+                    icon={<Icon name={"dollar-sign"} size={19} color="white" />}
+                />
 
-                <TouchableWithoutFeedback onPress={() => alert('oi')}>
-                    <Animated.View style={[styles.button, styles.subMenuReceita, receita]} >
-                        <Icon name="dollar-sign" size={19} color="white" />
-                    </Animated.View>
-                </TouchableWithoutFeedback>
+                <RenderHomeButton
+                    animation={receita}
+                    onPress={() => alert('oi')}
+                    styles={[styles.button, styles.subMenuReceita]}
+                    icon={<Icon name="dollar-sign" size={19} color="white" />}
+                />
 
-                <TouchableWithoutFeedback onPress={() => alert('oi')}>
-                    <Animated.View style={[styles.button, styles.subMenu, agenda]} >
-                        <Icon name="calendar" size={19} color="white" />
-                    </Animated.View>
-                </TouchableWithoutFeedback>
 
-                <TouchableWithoutFeedback onPress={this.toggleMenu}>
-                    <Animated.View style={[styles.button, styles.menu, rotation]} >
-                        <Icon name="plus" size={25} color="white" />
-                    </Animated.View>
-                </TouchableWithoutFeedback>
+                <RenderHomeButton
+                    animation={agenda}
+                    onPress={() => this.modalController('agenda')}
+                    styles={[styles.button, styles.subMenu]}
+                    icon={<Icon name="calendar" size={19} color="white" />}
+                />
+
+                <RenderHomeButton
+                    animation={rotation}
+                    onPress={this.toggleMenu.bind(this)}
+                    styles={[styles.button, styles.menu]}
+                    icon={<Icon name="plus" size={25} color="white" />}
+                />
             </View>
         )
     }

@@ -9,7 +9,7 @@ import {
     Button,
 } from '@ui-kitten/components';
 
-export default function ButtonAddAgendamento() {
+export default function ButtonAddAgendamento({ homeButton }) {
 
     const [modalVisible, setModalVisible] = useState(false)
 
@@ -44,21 +44,35 @@ export default function ButtonAddAgendamento() {
     )
     // ------------------------------------
 
-    return (
-        <>
-            <Button
-                style={styles.addAgendaButton}
-                icon={addIcon}
-                onPress={() => controleModal()}
-            >
-                ADICIONAR {'\n'}AGENDAMENTO
-            </Button>
-
-            <FormAddAgendamento
-                modalVisible={modalVisible}
-                controleModal={controleModal.bind(this)}
-                adicionarAgendamento={adicionarAgendamento.bind(this)}
-            />
-        </>
-    )
+    if(!homeButton){
+        return (
+            <>
+                <Button
+                    style={styles.addAgendaButton}
+                    icon={addIcon}
+                    onPress={() => controleModal()}
+                >
+                    ADICIONAR {'\n'}AGENDAMENTO
+                </Button>
+    
+                <FormAddAgendamento
+                    modalVisible={modalVisible}
+                    controleModal={controleModal.bind(this)}
+                    adicionarAgendamento={adicionarAgendamento.bind(this)}
+                />
+            </>
+        )
+    } else{
+        return (
+            <>
+                {() => controleModal()}
+    
+                <FormAddAgendamento
+                    modalVisible={modalVisible}
+                    controleModal={controleModal.bind(this)}
+                    adicionarAgendamento={adicionarAgendamento.bind(this)}
+                />
+            </>
+        )
+    }
 }
