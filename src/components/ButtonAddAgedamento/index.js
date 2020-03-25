@@ -5,6 +5,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import styles from './styles'
 import FormAddAgendamento from './form'
 
+import firebase from '../../services/firebaseConnection'
+
 import {
     Button,
 } from '@ui-kitten/components';
@@ -17,17 +19,22 @@ export default function ButtonAddAgendamento({ homeButton }) {
         setModalVisible(!modalVisible)
     }
 
-    function adicionarAgendamento(valores) {
-        let dados = JSON.stringify(valores)
-        alert(dados)
+    async function adicionarAgendamento(valores) {
 
-        /*
-            - Fazer validação dos campos no 'form.js' antes de mandar para cá (lembrar de zerar campos),
-            - Linkar com banco de dados,
-            - Gerar uma key única,
-            - Adicionar à lista de agendamentos,
-            - Usar o 'date-fns' para formatação de horários e datas
-        */
+        let dados = valores
+
+        let uid = firebase.auth().currentUser.uid
+        let key = dados["key"]
+
+        await firebase.database().ref(`users`).child(`${uid}/agendamentos/${key}`).set({
+            key: dados["key"],
+            nome: dados["nome"],
+            celular: dados["celular"],
+            descricao: dados["descricao"],
+            valorPrevisto: dados["valorPrevisto"],
+            date: dados["date"],
+            hora: dados["hora"],
+        })
 
         setModalVisible(false)
     }

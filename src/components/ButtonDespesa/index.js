@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import {
-    View,
-    Text,
-    TouchableOpacity,
-} from 'react-native'
+import React, { useState } from 'react'
 
 import styles from './styles'
 import FormDespesa from './form'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+
+import firebase from '../../services/firebaseConnection'
 
 import {
     Button,
@@ -17,20 +14,21 @@ export default function ButtonDespesa() {
 
     const [modalVisible, setModalVisible] = useState(false)
 
-    function adicionarDespesa(valores){
-        let dados = JSON.stringify(valores)
-        alert(dados)
+    async function adicionarDespesa(valores){
 
-        /* Implementar:
+        let dados = valores
 
-        IMPORTANTE: LEMBRAR DE CRIAR UMA KEY ÚNICA PARA CADA REGISTRO DE DESPESA, PARA QUE FACILITE A PROCURA
+        let uid = firebase.auth().currentUser.uid
+        let key = dados["key"]
 
-        - Fazer validação dos campos no 'form.js' antes de mandar para cá (lembrar de zerar campos),
-        - Validação dos campos;
-        - Validação do envio (adicionar alert confirmando valores);
-        - Linkar com o Firebase;
-        - Limpar campos após o envio.
-        */
+        await firebase.database().ref(`users`).child(`${uid}/caixa/despesas/${key}`).set({
+            key: dados["key"],
+            valor: dados["valor"],
+            descricao: dados["descricao"],
+            data: dados["data"],
+            parcelado: dados["parcelado"],
+            qntdParcelas: dados["qntdParcelas"]
+        })
 
        setModalVisible(false)
     }

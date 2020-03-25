@@ -25,10 +25,9 @@ function ButtonAddFunc() {
         let dados = valores
 
         let uid = firebase.auth().currentUser.uid
-        let key = dados["key"]
+        let key = dados["cpfCnpj"]
 
         await firebase.database().ref(`users`).child(`${uid}/funcionarios/${key}`).set({
-            key: dados["key"],
             nomeFuncionario: dados["nomeFuncionario"],
             cargo: dados["cargo"],
             cpfCnpj: dados["cpfCnpj"],

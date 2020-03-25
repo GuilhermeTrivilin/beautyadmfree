@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, Modal, KeyboardAvoidingView } from 'react-native'
+import { View, Text, Modal, KeyboardAvoidingView, Alert } from 'react-native'
 
 import styles from './styles'
 import Icon from 'react-native-vector-icons/Feather'
@@ -14,9 +14,7 @@ import {
 } from 'date-fns';
 
 import { ptBR } from 'date-fns/locale';
-
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-
 export default function FormAddAgendamento({ modalVisible, controleModal, adicionarAgendamento }) {
 
     // States para registro do agendamento
@@ -67,6 +65,25 @@ export default function FormAddAgendamento({ modalVisible, controleModal, adicio
 
         setHora(horaFormatada)
 
+    }
+
+    function validaInfos() {
+        if (nome != "" && celular != "" && descricao != "" && date != null && hora != null) {
+            return true
+        } else {
+            Alert.alert(
+                "ERRO NO CADASTRO",
+                'Você precisa preencher todos os campos'
+            )
+        }
+    }
+
+    function geraKey(){
+        let nomeKey = nome.split(" ")[0]
+        let dataKey = date.split('/')[0]
+        let horaKey = hora.split(':')[0]
+
+        return `agendamento_${nomeKey}_${dataKey}_${horaKey}`
     }
 
     // ÍCONES - UI KITTEN
@@ -202,17 +219,20 @@ export default function FormAddAgendamento({ modalVisible, controleModal, adicio
                             status='success'
                             icon={addIcon}
                             onPress={() => {
-                                let compilaDados = {
-                                    nome: nome,
-                                    celular: celular,
-                                    descricao: descricao,
-                                    valorPrevisto: valorPrevisto,
-                                    date: date,
-                                    hora: hora
-                                }
+                                if (validaInfos()) {
+                                    let compilaDados = {
+                                        key: geraKey(),
+                                        nome: nome,
+                                        celular: celular,
+                                        descricao: descricao,
+                                        valorPrevisto: valorPrevisto,
+                                        date: date,
+                                        hora: hora
+                                    }
 
-                                fecharModal()
-                                adicionarAgendamento(compilaDados)
+                                    fecharModal()
+                                    adicionarAgendamento(compilaDados)
+                                }
                             }}
                         >
                             ADICIONAR

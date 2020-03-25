@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, TouchableOpacity, Modal, ScrollView, FlatList, Dimensions } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Modal, ScrollView, FlatList, Dimensions, Alert } from 'react-native'
 
 import styles from './styles'
 
@@ -41,6 +41,25 @@ export default function FormReceita({ modalVisible, controleModal, adicionarRece
     const [listaProdutosSelecionados, setListaProdutosSelecionados] = useState([])
     const [listaFuncionariosComissionados, setListaFuncionariosComissionados] = useState([])
 
+    function validaInfos() {
+        if (valor != '' && descricao != '' && data != null && nomeCliente != '' && tipoEntrada != '' && funcionarioResp != null && formaPagamento != '') {
+            return true
+        } else {
+            Alert.alert(
+                'ERRO NO CADASTRO',
+                'VOCÊ PRECISA PREENCHER TODOS OS CAMPOS'
+            )
+        }
+    }
+
+    function geraKey() {
+        let valorKey = parseFloat(valor)
+        let nomeKey = nomeCliente.split(' ')[0]
+        let dataKey = data.split('/').join("_")
+
+        return `${valorKey}_${nomeKey}_${dataKey}`
+    }
+
     const listaTempProdutos = [
         {
             key: "prod1", label: 'Produto 1'
@@ -79,6 +98,10 @@ export default function FormReceita({ modalVisible, controleModal, adicionarRece
 
     function fecharModal() {
         controleModal()
+        limparModal()
+    }
+
+    function limparModal(){
         setValor('')
         setDescricao('')
         setData('')
@@ -417,20 +440,23 @@ export default function FormReceita({ modalVisible, controleModal, adicionarRece
                                 style={styles.addButton}
                                 icon={saveIcon}
                                 onPress={() => {
-                                    let compilaDados = {
-                                        nomeCliente: nomeCliente,
-                                        nomeFuncionario: funcionarioResp,
-                                        receita: valor,
-                                        descricaoReceita: descricao,
-                                        formaPagamento: formaPagamento,
-                                        data: data,
-                                        tipoEntrada: tipoEntrada,
-                                        produtosSelecionados: listaProdutosSelecionados,
-                                        funcionariosComissionados: listaFuncionariosComissionados,
-                                        desconto: desconto
+                                    if (validaInfos()) {
+                                        let compilaDados = {
+                                            key: geraKey(),
+                                            nomeCliente: nomeCliente,
+                                            funcionarioResp: funcionarioResp,
+                                            valor: valor,
+                                            descricao: descricao,
+                                            formaPagamento: formaPagamento,
+                                            data: data,
+                                            tipoEntrada: tipoEntrada,
+                                            produtosSelecionados: listaProdutosSelecionados,
+                                            funcionariosComissionados: listaFuncionariosComissionados,
+                                            desconto: desconto
+                                        }
+                                        limparModal()
+                                        adicionarReceita(compilaDados)
                                     }
-
-                                    adicionarReceita(compilaDados)
                                 }
                                 }
                             >

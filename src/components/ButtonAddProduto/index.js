@@ -32,6 +32,7 @@ function ButtonAddProduto() {
             estoqueLimite: dados["estoqueLimite"],
             valor: dados["valor"]
         })
+        
         setModalVisible(false)
     }
 

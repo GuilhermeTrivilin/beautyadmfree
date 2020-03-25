@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, TouchableOpacity, Modal, Image, Switch } from 'react-native'
+import { View, Text, Modal, Alert, Switch } from 'react-native'
 
 import styles from './styles'
 import Icon from 'react-native-vector-icons/AntDesign'
@@ -27,8 +27,8 @@ export default function FormDespesa({ modalVisible, controleModal, adicionarDesp
 
     const [valor, setValor] = useState('')
     const [descricao, setDescricao] = useState('')
-    const [data, setData] = useState('')
-    const [switchParcelado, setSwitchParcelado] = useState(false)
+    const [data, setData] = useState(null)
+    const [parcelado, setParcelado] = useState(false)
     const [qntdParcelas, setQntdParcelas] = useState(0)
 
     function fecharModal() {
@@ -36,8 +36,33 @@ export default function FormDespesa({ modalVisible, controleModal, adicionarDesp
         setValor('')
         setDescricao('')
         setData('')
-        setSwitchParcelado(false)
+        setParcelado(false)
         setQntdParcelas(0)
+    }
+
+    function validaInfos() {
+        if (valor != '' && descricao != '' && data != null) {
+            if (parcelado == true && qntdParcelas != 0 || parcelado == false) {
+                return true
+            } else {
+                Alert.alert(
+                    'ERRO NO CADASTRO',
+                    'PREENCHA A QUANTIDADE DE PARCELAS'
+                )
+            }
+        } else {
+            Alert.alert(
+                'ERRO NO CADASTRO',
+                'PREENCHA TODOS OS CAMPOS'
+            )
+        }
+    }
+
+    function geraKey(){
+        let dataKey = data.split('/').join('_')
+        let valorKey = parseFloat(valor)
+
+        return `${dataKey}_${valorKey}`
     }
 
     // ICONES BOTÕES - UI KITTEN
@@ -140,12 +165,12 @@ export default function FormDespesa({ modalVisible, controleModal, adicionarDesp
                             Pagamento Parcelado?
                         </Text>
                         <Switch
-                            value={switchParcelado}
-                            onValueChange={(valSwitch) => setSwitchParcelado(valSwitch)}
+                            value={parcelado}
+                            onValueChange={(valSwitch) => setParcelado(valSwitch)}
                         />
                     </View>
 
-                    {switchParcelado && <View style={{ flexDirection: 'row', marginVertical: 10, }}>
+                    {parcelado && <View style={{ flexDirection: 'row', marginVertical: 10, }}>
                         <Input
                             label="Quantidade de parcelas"
                             labelStyle={styles.modalLabel}
@@ -162,15 +187,19 @@ export default function FormDespesa({ modalVisible, controleModal, adicionarDesp
                             style={styles.addButton}
                             icon={saveIcon}
                             onPress={() => {
-                                let compilaDados = {
-                                    despesa: valor,
-                                    descricaoDespesa: descricao,
-                                    data: data,
-                                    parcelado: switchParcelado,
-                                    qntdParcelas: qntdParcelas
+                                if (validaInfos()) {
+                                    let compilaDados = {
+                                        key: geraKey(),
+                                        valor: valor,
+                                        descricao: descricao,
+                                        data: data,
+                                        parcelado: parcelado,
+                                        qntdParcelas: qntdParcelas
+                                    }
+
+                                    adicionarDespesa(compilaDados)
                                 }
 
-                                adicionarDespesa(compilaDados)
                             }
                             }
                         >
