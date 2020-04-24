@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/GuilhermeTrivilin/beautyadmapp/master/readme-imgs/banner-readme.png">
-  <img src="https://raw.githubusercontent.com/GuilhermeTrivilin/beautyadmapp/master/readme-imgs/1.png">
-  <img src="https://raw.githubusercontent.com/GuilhermeTrivilin/beautyadmapp/master/readme-imgs/2.png">
-  <img src="https://raw.githubusercontent.com/GuilhermeTrivilin/beautyadmapp/master/readme-imgs/3.png">
-  <img src="https://raw.githubusercontent.com/GuilhermeTrivilin/beautyadmapp/master/readme-imgs/4.png">
-  <img src="https://raw.githubusercontent.com/GuilhermeTrivilin/beautyadmapp/master/readme-imgs/5.png">
-  <img src="https://raw.githubusercontent.com/GuilhermeTrivilin/beautyadmapp/master/readme-imgs/6.png">
+  <img src="https://raw.githubusercontent.com/GuilhermeTrivilin/beautyadmappfree/master/readme-imgs/banner-readme.png">
+  <img src="https://raw.githubusercontent.com/GuilhermeTrivilin/beautyadmappfree/master/readme-imgs/1.png">
+  <img src="https://raw.githubusercontent.com/GuilhermeTrivilin/beautyadmappfree/master/readme-imgs/2.png">
+  <img src="https://raw.githubusercontent.com/GuilhermeTrivilin/beautyadmappfree/master/readme-imgs/3.png">
+  <img src="https://raw.githubusercontent.com/GuilhermeTrivilin/beautyadmappfree/master/readme-imgs/4.png">
+  <img src="https://raw.githubusercontent.com/GuilhermeTrivilin/beautyadmappfree/master/readme-imgs/5.png">
+  <img src="https://raw.githubusercontent.com/GuilhermeTrivilin/beautyadmappfree/master/readme-imgs/6.png">
 </p>
 
 
